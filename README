@@ -1,0 +1,1 @@
+An MDBbase_img is a foundation for 2 containers running mariadb10.4 a mariabackup container performing backups by a cronned schedule.
