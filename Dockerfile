@@ -12,11 +12,14 @@ RUN yum -y install --setopt=tsflags=nodocs epel-release && \
     yum clean all
 
 RUN /bin/chmod +x /entrypoint.sh /usr/local/bin/gosu && \
-    mkdir -p /var/log/mariadb  /docker-entrypoint-initdb.d && \
-    rm -rf /var/lib/mysql && \
-    mkdir -p /var/lib/mysql /var/run/mysqld && \
-    chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && \
+    mkdir -p /docker-entrypoint-initdb.d /var/run/mysqld /mnt/mariadb /mnt/log && \
+    rm -rf /var/lib/mysql /var/log/mariadb && \
+    chown -R mysql:mysql /mnt/mariadb /mnt/log /var/run/mysqld && \
     chmod 777 /var/run/mysqld && \
+    ln -s /mnt/mariadb /var/lib/mysql && \
+    ln -s /mnt/log /var/log/mariadb && \
+    ln -s /mnt/log /var/log && \
+    rm -rf /mnt/log /mnt/mariadb && \
     echo -e '[mysqld]\nskip-host-cache\nskip-name-resolve' > /etc/my.cnf.d/docker.cnf
 
 #ENTRYPOINT ["/entrypoint.sh"]
