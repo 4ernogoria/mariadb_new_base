@@ -4,7 +4,8 @@ MAINTAINER SharxDC
 COPY mariadb.repo /etc/yum.repos.d/mariadb.repo
 COPY gosu /usr/local/bin/gosu
 
-RUN yum -y install --setopt=tsflags=nodocs epel-release && \ 
+RUN yum -y install --setopt=tsflags=nodocs epel-release \
+    tzdata && \ 
     useradd -u 9869 mysql && \
     yum -y install --setopt=tsflags=nodocs MariaDB-server tzdata && \   
     yum -y update && \
